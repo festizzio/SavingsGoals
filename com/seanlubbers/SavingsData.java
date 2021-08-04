@@ -191,41 +191,41 @@ public class SavingsData {
 
     public boolean deleteGoalData(String goalToDelete) {
         if(goals.containsKey(goalToDelete)) {
-//            try(PreparedStatement deleteGoal = conn.prepareStatement(DELETE_GOAL);
-//                PreparedStatement deleteTransactions = conn.prepareStatement(DELETE_GOAL_TRANSACTIONS)) {
-//                deleteGoal.setString(INDEX_GOAL_NAME, goalToDelete);
-//                deleteTransactions.setString(INDEX_GOAL_NAME, goalToDelete);
-//                deleteGoal.execute();
-//                deleteTransactions.execute();
-//            } catch(SQLException e) {
-//                System.out.println("Error preparing statement to delete goal or transactions: " +
-//                        e.getMessage());
-//                e.printStackTrace();
-//            }
-            try {
-                deleteGoal = conn.prepareStatement(DELETE_GOAL);
+            try(PreparedStatement deleteGoal = conn.prepareStatement(DELETE_GOAL);
+                PreparedStatement deleteTransactions = conn.prepareStatement(DELETE_GOAL_TRANSACTIONS)) {
                 deleteGoal.setString(INDEX_GOAL_NAME, goalToDelete);
-            } catch(SQLException e) {
-                System.out.println("Error preparing statement to delete goal " + goalToDelete + ".");
-                e.printStackTrace();
-                return false;
-            }
-            try {
-                deleteTransactions = conn.prepareStatement(DELETE_GOAL_TRANSACTIONS);
                 deleteTransactions.setString(INDEX_GOAL_NAME, goalToDelete);
-            } catch(SQLException e) {
-                System.out.println("Error preparing statement to delete transactions from goal " + goalToDelete + ".");
-                e.printStackTrace();
-                return false;
-            }
-            try {
                 deleteGoal.execute();
                 deleteTransactions.execute();
             } catch(SQLException e) {
-                System.out.println("Error executing delete statements for goal and transactions for " + goalToDelete + ".");
+                System.out.println("Error preparing statement to delete goal or transactions: " +
+                        e.getMessage());
                 e.printStackTrace();
-                return false;
             }
+//            try {
+//                deleteGoal = conn.prepareStatement(DELETE_GOAL);
+//                deleteGoal.setString(INDEX_GOAL_NAME, goalToDelete);
+//            } catch(SQLException e) {
+//                System.out.println("Error preparing statement to delete goal " + goalToDelete + ".");
+//                e.printStackTrace();
+//                return false;
+//            }
+//            try {
+//                deleteTransactions = conn.prepareStatement(DELETE_GOAL_TRANSACTIONS);
+//                deleteTransactions.setString(INDEX_GOAL_NAME, goalToDelete);
+//            } catch(SQLException e) {
+//                System.out.println("Error preparing statement to delete transactions from goal " + goalToDelete + ".");
+//                e.printStackTrace();
+//                return false;
+//            }
+//            try {
+//                deleteGoal.execute();
+//                deleteTransactions.execute();
+//            } catch(SQLException e) {
+//                System.out.println("Error executing delete statements for goal and transactions for " + goalToDelete + ".");
+//                e.printStackTrace();
+//                return false;
+//            }
             try {
                 conn.commit();
             } catch(SQLException e) {
